@@ -96,6 +96,41 @@ nav {
   border-bottom-color: var(--green);
 }
 
+
+nav {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+nav::-webkit-scrollbar { height: 4px; }
+nav::-webkit-scrollbar-thumb { background: var(--green-mid); }
+
+.nav-logo,
+.nav-links,
+.nav-links li {
+  flex-shrink: 0;
+}
+
+.nav-links {
+  min-width: max-content;
+}
+
+.nav-links a {
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  nav {
+    padding: 0 16px;
+  }
+
+  .nav-logo {
+    margin-right: 12px;
+  }
+}
+
 /* ── PAGE HEADER ── */
 .page-header {
   padding: 72px 48px 56px;
