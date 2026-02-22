@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MARATHON ARCHIVE // RUNNERS</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:     #c2fe0b;
+  --green-dim: rgba(194,254,11,0.12);
+  --green-mid: rgba(194,254,11,0.35);
+  --green-glow:rgba(194,254,11,0.5);
+  --black:     #000000;
+  --bg:        #050505;
+  --bg2:       #0a0a0a;
+  --border:    rgba(194,254,11,0.15);
+  --white:     #ffffff;
+  --grey:      #888888;
+  --grey-dim:  #444444;
+}
+
+html, body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* scanlines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.12) 3px,rgba(0,0,0,0.12) 4px);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 52px;
+}
+
+.nav-logo {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.25em;
+  text-decoration: none;
+  margin-right: 40px;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  height: 100%;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 18px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 72px 48px 56px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 40%;
+  height: 100%;
+  background: radial-gradient(ellipse at top right, rgba(194,254,11,0.04), transparent 70%);
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: var(--green);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.page-title {
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.page-title em {
+  font-style: normal;
+  color: var(--green);
+}
+
+.page-lead {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--grey);
+  max-width: 640px;
+  letter-spacing: 0.05em;
+}
+
+/* ── CONTENT AREA ── */
+.content { max-width: 1400px; margin: 0 auto; padding: 64px 48px; }
+
+/* ── SECTION DIVIDER ── */
+.section-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--green);
+  text-transform: uppercase;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+/* ── LORE TEXT ── */
+.lore-text {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.8);
+  max-width: 780px;
+}
+
+.lore-text p { margin-bottom: 1.4em; }
+
+.lore-text .classified {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.2em;
+  background: var(--green-dim);
+  padding: 14px 18px;
+  border-left: 2px solid var(--green);
+  margin: 24px 0;
+  display: block;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 28px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 80px;
+}
+
+.footer-mono {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--grey-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.footer-mono span { color: var(--green); }
+
+
+.runners-intro {
+  max-width: 700px;
+  margin-bottom: 64px;
+}
+
+.runner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+
+@media (max-width: 900px) { .runner-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .runner-grid { grid-template-columns: 1fr; } }
+
+.runner-card {
+  background: var(--bg);
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s;
+}
+
+.runner-card:hover { background: var(--bg2); }
+
+.runner-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+
+.runner-card:hover::before { transform: scaleX(1); }
+
+.runner-class-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+
+.runner-name {
+  font-size: 36px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+
+.runner-card:hover .runner-name { color: var(--green); }
+
+.runner-role {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 16px;
+}
+
+.runner-lore {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 20px;
+}
+
+.ability-list { display: flex; flex-direction: column; gap: 8px; }
+
+.ability-item {
+  border-left: 2px solid var(--green-mid);
+  padding: 8px 12px;
+  background: var(--green-dim);
+}
+
+.ability-type {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  color: var(--green);
+  margin-bottom: 3px;
+}
+
+.ability-name {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+
+.ability-desc {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--grey);
+  line-height: 1.5;
+}
+
+.rook-notice {
+  background: var(--green-dim);
+  border: 1px solid var(--green-mid);
+  padding: 28px 32px;
+  margin-top: 1px;
+}
+
+.rook-notice-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.rook-notice-body {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  max-width: 700px;
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">// MARATHON</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="world.html">World</a></li>
+    <li><a href="factions.html">Factions</a></li>
+    <li><a href="runners.html" class="active">Runners</a></li>
+    <li><a href="characters.html">Characters</a></li>
+    <li><a href="timeline.html">Timeline</a></li>
+    <li><a href="items.html">Items</a></li>
+    <li><a href="items.html">Items</a></li>
+  </ul>
+</nav>
+
+
+<div class="page-header">
+  <div class="eyebrow">// CLASSIFICATION: PUBLIC // BIO-CYBERNETIC SHELL REGISTRY</div>
+  <div class="page-title">RUNNER<br><em>SHELLS</em></div>
+  <div class="page-lead">Runners are humans who have abandoned their biological bodies in favour of bio-cybernetic shells — specialised frames printed by CyberAcme and other licensed manufacturers. Each shell classification is purpose-built for a distinct operational profile. Six shells are active for the current deployment cycle.</div>
+</div>
+
+<div class="content">
+  <div class="section-label">// ACTIVE SHELL CLASSIFICATIONS — CYCLE 2893</div>
+  <div class="runner-grid">
+    
+    <div class="runner-card" style="--accent:#4a9ab8">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#4a9ab8;transform:scaleX(0);transform-origin:left;transition:transform 0.4s;"></div>
+      <div class="runner-class-tag">RUNNER CLASS //</div>
+      <div class="runner-name">BLACKBIRD</div>
+      <div class="runner-role">Scout / Intelligence</div>
+      <div class="runner-lore">Blackbird shells are built for information dominance. A Blackbird team that communicates effectively is rarely surprised. Their detection systems make them invaluable in multi-team environments where knowing where threats are before they arrive is the difference between extraction and termination.</div>
+      <div class="ability-list">
+          <div class="ability-item">
+            <div class="ability-type">PRIME</div>
+            <div class="ability-name">Echo Pulse</div>
+            <div class="ability-desc">Releases a barrage of sonar pulses, revealing the location of all nearby hostiles.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TACTICAL</div>
+            <div class="ability-name">Tracker Drone</div>
+            <div class="ability-desc">Deploys a mechanised microbot that tracks down nearby hostiles and detonates on contact, overheating targets.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Interrogation</div>
+            <div class="ability-desc">Performing a finisher on a downed Runner pings their entire crew. Automatically warns you when pinged by a hostile.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Stalker Protocol</div>
+            <div class="ability-desc">Breaking an enemy's shield leaves a lingering holographic trail, allowing you to track their movement.</div>
+          </div>
+      </div>
+    </div>
+    
+    <div class="runner-card" style="--accent:#c2fe0b">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#c2fe0b;transform:scaleX(0);transform-origin:left;transition:transform 0.4s;"></div>
+      <div class="runner-class-tag">RUNNER CLASS //</div>
+      <div class="runner-name">GLITCH</div>
+      <div class="runner-role">Mobility / Disruption</div>
+      <div class="runner-lore">Glitch shells prioritise movement speed and positional advantage above all else. A Glitch who understands their environment is nearly impossible to pin down. Their disruption capabilities allow them to destabilise engagements in ways that confuse and scatter opponents before a conventional firefight begins.</div>
+      <div class="ability-list">
+          <div class="ability-item">
+            <div class="ability-type">PRIME</div>
+            <div class="ability-name">Amplify</div>
+            <div class="ability-desc">Supercharges the shell's movement systems, granting enhanced speed and double-jump capability for a short duration.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TACTICAL</div>
+            <div class="ability-name">Disruptor</div>
+            <div class="ability-desc">Deploys an electromagnetic pulse device that disrupts enemy systems and ability usage in an area.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Microjets</div>
+            <div class="ability-desc">Passive jet-assisted movement system that enables extended air time and rapid directional changes.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Power Slide</div>
+            <div class="ability-desc">Allows high-speed sliding manoeuvres that can be chained into jumps, maintaining momentum.</div>
+          </div>
+      </div>
+    </div>
+    
+    <div class="runner-card" style="--accent:#b83020">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#b83020;transform:scaleX(0);transform-origin:left;transition:transform 0.4s;"></div>
+      <div class="runner-class-tag">RUNNER CLASS //</div>
+      <div class="runner-name">LOCUS</div>
+      <div class="runner-role">Assault / Area Denial</div>
+      <div class="runner-lore">Locus shells are blunt instruments. They are built for Runners who have decided that the most effective strategy is to move forward and eliminate everything in their path. Their offensive capabilities are formidable but come at the cost of defensive flexibility. A Locus who stops moving is a Locus who dies.</div>
+      <div class="ability-list">
+          <div class="ability-item">
+            <div class="ability-type">PRIME</div>
+            <div class="ability-name">Search and Destroy</div>
+            <div class="ability-desc">Activates shoulder-mounted missile launchers that fire homing projectiles, immobilising and damaging targets on impact.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TACTICAL</div>
+            <div class="ability-name">Riot Barricade</div>
+            <div class="ability-desc">Deploys a reinforced directional barrier that blocks incoming fire and can be used for aggressive pushes.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Thruster</div>
+            <div class="ability-desc">A short-range burst propulsion system allowing rapid directional repositioning in combat.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Tactical Sprint</div>
+            <div class="ability-desc">Enhanced sprint capability that reduces incoming damage during movement and improves collision resistance.</div>
+          </div>
+      </div>
+    </div>
+    
+    <div class="runner-card" style="--accent:#9062c8">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#9062c8;transform:scaleX(0);transform-origin:left;transition:transform 0.4s;"></div>
+      <div class="runner-class-tag">RUNNER CLASS //</div>
+      <div class="runner-name">VOID</div>
+      <div class="runner-role">Stealth / Evasion</div>
+      <div class="runner-lore">Void shells do not win fights by engaging them. They win by choosing when an engagement happens, where it happens, and on whose terms. The most effective Void operators are those who understand that invisibility is not simply the absence of being seen — it is the presence of uncertainty in an opponent's mind.</div>
+      <div class="ability-list">
+          <div class="ability-item">
+            <div class="ability-type">PRIME</div>
+            <div class="ability-name">Smoke Screen</div>
+            <div class="ability-desc">Deploys a wide-radius chemical smoke cloud that obscures vision and disrupts targeting systems.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TACTICAL</div>
+            <div class="ability-name">Active Camo</div>
+            <div class="ability-desc">Activates full optical camouflage, rendering the shell nearly invisible for a short duration.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Shadow Dive</div>
+            <div class="ability-desc">A rapid concealed movement technique that allows repositioning without breaking stealth.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Shroud</div>
+            <div class="ability-desc">Passively reduces the shell's heat and acoustic signature, making detection significantly harder at range.</div>
+          </div>
+      </div>
+    </div>
+    
+    <div class="runner-card" style="--accent:#d4822a">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#d4822a;transform:scaleX(0);transform-origin:left;transition:transform 0.4s;"></div>
+      <div class="runner-class-tag">RUNNER CLASS //</div>
+      <div class="runner-name">THIEF</div>
+      <div class="runner-role">Scavenge / Acquisition</div>
+      <div class="runner-lore">Thief shells are optimised for one purpose: extracting value from hostile environments faster than anyone else. Whether the target is a weapon cache, a data terminal, or loot on a downed Runner, Thief capabilities are built to acquire it quickly and disappear before the consequences arrive. Thief operators tend to be people who are very good at knowing when to run.</div>
+      <div class="ability-list">
+          <div class="ability-item">
+            <div class="ability-type">PRIME</div>
+            <div class="ability-name">Loot Sense</div>
+            <div class="ability-desc">Briefly reveals the location of all lootable containers and dropped items within a wide radius.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TACTICAL</div>
+            <div class="ability-name">Quick Hands</div>
+            <div class="ability-desc">Dramatically accelerates interaction speed with containers, terminals, and downed Runners for a short duration.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Lightweight</div>
+            <div class="ability-desc">Reduced shell mass allows faster base movement and quieter footstep audio signature.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Finders Keepers</div>
+            <div class="ability-desc">Increases the loot quality tier of items found in containers during a run.</div>
+          </div>
+      </div>
+    </div>
+    
+    <div class="runner-card" style="--accent:#5a9840">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#5a9840;transform:scaleX(0);transform-origin:left;transition:transform 0.4s;"></div>
+      <div class="runner-class-tag">RUNNER CLASS //</div>
+      <div class="runner-name">TRIAGE</div>
+      <div class="runner-role">Support / Recovery</div>
+      <div class="runner-lore">Triage shells are the only Runner class specifically designed with another Runner's survival in mind. In a zone where every team member represents an irreplaceable asset, a Triage operator's ability to maintain crew functionality under fire is a force multiplier that changes the calculus of every engagement. Teams without Triage can win runs. Teams with a skilled Triage operator tend to survive them.</div>
+      <div class="ability-list">
+          <div class="ability-item">
+            <div class="ability-type">PRIME</div>
+            <div class="ability-name">Healing Drone</div>
+            <div class="ability-desc">Deploys a mobile medical drone that automatically administers repair protocols to nearby allied Runners.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TACTICAL</div>
+            <div class="ability-name">Emergency Extract</div>
+            <div class="ability-desc">Rapidly stabilises a critically damaged allied Runner and boosts their immediate recovery rate.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Field Surgeon</div>
+            <div class="ability-desc">Increases the effectiveness of all healing items used by you and nearby allies.</div>
+          </div>
+          <div class="ability-item">
+            <div class="ability-type">TRAIT</div>
+            <div class="ability-name">Resilience</div>
+            <div class="ability-desc">Passively reduces damage taken by allies within close proximity of the Triage shell.</div>
+          </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="rook-notice" style="margin-top:40px;">
+    <div class="rook-notice-title">// SPECIAL CLASSIFICATION: ROOK</div>
+    <div class="rook-notice-body">Rook is not a standard shell. It is a contingency deployment option — a stripped-down frame issued to operators who have lost their primary shell and need to re-enter the field immediately. Rook deployments are solo, mid-match, and loadout-locked. No offensive abilities. No upgrade path. Rook is a last resort, not a strategy. Its primary function is scavenging enough resources to fund a proper re-entry on the next run. Rook is available on Perimeter, Dire Marsh, and Outpost only. It cannot be selected for Cryo Archive operations.</div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.runner-card').forEach(card => {
+  const bar = card.querySelector('div[style*="scaleX"]');
+  card.addEventListener('mouseenter', () => { if(bar) bar.style.transform = 'scaleX(1)'; });
+  card.addEventListener('mouseleave', () => { if(bar) bar.style.transform = 'scaleX(0)'; });
+});
+</script>
+
+<footer>
+  <span class="footer-mono">MARATHON ARCHIVE // <span>TAU CETI IV OPERATIONS</span></span>
+  <span class="footer-mono">© BUNGIE 2026 // ALL DATA CLASSIFIED</span>
+</footer>
+<script>
+// Mark active nav
+document.querySelectorAll('.nav-links a').forEach(a => {
+  if (a.getAttribute('href') === window.location.pathname.split('/').pop() ||
+     (window.location.pathname.endsWith('/') && a.getAttribute('href') === 'index.html')) {
+    a.classList.add('active');
+  }
+});
+</script>
+</body>
+</html>
